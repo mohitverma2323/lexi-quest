@@ -82,10 +82,11 @@ export default function ArticlesPage() {
               <CardDescription>
                 <Clock className="mr-2 inline-block h-4 w-4" />
                 {currentArticle.readingTime} min read
+                <br />
+                <span className="font-bold">BLUF:</span> {currentArticle.bluf}
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="font-bold">BLUF: {currentArticle.bluf}</p>
               <p>{currentArticle.summary}</p>
             </CardContent>
             <CardFooter className="flex justify-between items-center">
