@@ -14,6 +14,7 @@ import { Book, Clock, Link, Bookmark, User } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Toaster, toast } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 const tagsList = [
   "Technology",
