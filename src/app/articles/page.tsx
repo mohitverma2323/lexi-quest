@@ -67,10 +67,11 @@ export default function ArticlesPage() {
         <Button
           variant="ghost"
           size="icon"
+          className="rounded-full p-6"
           onClick={goToPreviousArticle}
           disabled={currentArticleIndex === 0}
         >
-          <ChevronLeft className="h-8 w-8" />
+          <ChevronLeft className="h-12 w-12" />
         </Button>
 
         {/* Article Display */}
@@ -116,10 +117,11 @@ export default function ArticlesPage() {
         <Button
           variant="ghost"
           size="icon"
+          className="rounded-full p-6"
           onClick={goToNextArticle}
           disabled={currentArticleIndex === articles.length - 1}
         >
-          <ChevronRight className="h-8 w-8" />
+          <ChevronRight className="h-12 w-12" />
         </Button>
       </div>
       <Toaster />
