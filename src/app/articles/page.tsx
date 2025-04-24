@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation';
 import { ArticleSummary, getArticles, recordArticleDisplayed } from "@/services/article-service";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Link, Bookmark, ChevronLeft, ChevronRight } from "lucide-react";
 import { Toaster, toast } from "@/components/ui/toaster";
@@ -76,41 +75,11 @@ export default function ArticlesPage() {
 
         {/* Article Display */}
         {currentArticle ? (
-          <Card className="w-full h-full flex flex-col justify-between">
-            <CardHeader className="relative">
-              <CardTitle>{currentArticle.title}</CardTitle>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="absolute top-2 right-2 p-1.5"
-                  onClick={() => handleBookmark(currentArticle.id)}
-                >
-                  <Bookmark className="h-6 w-6" />
-                </Button>
-              <div className="text-sm text-muted-foreground">
-                <Clock className="mr-2 inline-block h-4 w-4" />
-                {currentArticle.readingTime} min read
-                <br />
-                <span className="font-bold text-lg">{currentArticle.bluf}</span>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p>{currentArticle.summary}</p>
-            </CardContent>
-            <CardFooter className="flex justify-between items-center">
-              <Button variant="link" asChild>
-                <a
-                  href={currentArticle.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center"
-                >
-                  Read More
-                  <Link className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-            </CardFooter>
-          </Card>
+          <ArticleDisplay
+            article={currentArticle}
+            onBookmark={handleBookmark}
+            onArticleDisplayed={handleArticleDisplayed}
+          />
         ) : (
           <p>No articles found.</p>
         )}
@@ -131,13 +100,81 @@ export default function ArticlesPage() {
   );
 }
 
-const CardFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn(
-      "flex items-center p-6 pt-0",
-      className
-    )}
-    {...props}
-  />
-)
+interface ArticleDisplayProps {
+  article: ArticleSummary;
+  onBookmark: (articleId: string) => void;
+  onArticleDisplayed: (articleId: string) => void;
+}
 
+const ArticleDisplay: React.FC<ArticleDisplayProps> = ({ article, onBookmark, onArticleDisplayed }) => {
+  useEffect(() => {
+    onArticleDisplayed(article.id);
+  }, [article.id, onArticleDisplayed]);
+
+  return (
+    <div className="w-full h-full flex flex-col justify-start items-center">
+      <ArticleHeader
+        title={article.title}
+        onBookmark={() => onBookmark(article.id)}
+      />
+      <ArticleContent
+        readingTime={article.readingTime}
+        bluf={article.bluf}
+        summary={article.summary}
+        link={article.link}
+      />
+    </div>
+  );
+};
+
+interface ArticleHeaderProps {
+  title: string;
+  onBookmark: () => void;
+}
+
+const ArticleHeader: React.FC<ArticleHeaderProps> = ({ title, onBookmark }) => {
+  return (
+    <div className="relative w-full p-6">
+      <h1 className="text-3xl font-bold text-center">{title}</h1>
+      <Button
+        variant="outline"
+        size="icon"
+        className="absolute top-2 right-2 p-1.5 transform scale-125"
+        onClick={onBookmark}
+      >
+        <Bookmark className="h-6 w-6" />
+      </Button>
+    </div>
+  );
+};
+
+interface ArticleContentProps {
+  readingTime: number;
+  bluf: string;
+  summary: string;
+  link: string;
+}
+
+const ArticleContent: React.FC<ArticleContentProps> = ({ readingTime, bluf, summary, link }) => {
+  return (
+    <div className="w-full px-6 py-4 flex flex-col items-center">
+      <div className="text-sm text-muted-foreground mb-4">
+        <Clock className="mr-2 inline-block h-4 w-4" />
+        {readingTime} min read
+      </div>
+      <div className="font-bold text-lg text-center mb-4 transform scale-125">{bluf}</div>
+      <p className="text-md text-gray-700 text-justify">{summary}</p>
+      <Button variant="link" asChild className="mt-4">
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center"
+        >
+          Read More
+          <Link className="ml-2 h-4 w-4" />
+        </a>
+      </Button>
+    </div>
+  );
+};
