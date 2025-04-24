@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {useState, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
@@ -7,7 +7,7 @@ import {Button} from '@/components/ui/button';
 import {Label} from '@/components/ui/label';
 import {Checkbox} from '@/components/ui/checkbox';
 import {Separator} from '@/components/ui/separator';
-import {Slider} from '@/components/ui/slider'; // Import Slider
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {cn} from '@/lib/utils';
 
 async function fetchTags(): Promise<string[]> {
@@ -67,15 +67,18 @@ export default function Home() {
             <Label htmlFor="readingTime" className="mb-2 block">
               Select Reading Time (1-10 minutes):
             </Label>
-            <Slider
-              id="readingTime"
-              defaultValue={[readingTime]}
-              max={10}
-              min={1}
-              step={1}
-              onValueChange={value => setReadingTime(value[0])}
-              className="mt-2"
-            />
+            <Select value={readingTime.toString()} onValueChange={(value) => setReadingTime(Number(value))}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select a reading time" />
+              </SelectTrigger>
+              <SelectContent>
+                {Array.from({ length: 10 }, (_, i) => i + 1).map((time) => (
+                  <SelectItem key={time} value={time.toString()}>
+                    {time} minutes
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <p className="text-sm text-muted-foreground mt-1">
               Selected Reading Time: {readingTime} minutes
             </p>
@@ -100,7 +103,7 @@ export default function Home() {
           </div>
 
           <Separator />
-          <Button onClick={handleSubmit}>Show Articles</Button>
+          <Button onClick={handleSubmit}>Get Articles</Button>
         </CardContent>
       </Card>
     </div>
