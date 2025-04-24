@@ -60,8 +60,9 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-start justify-center min-h-screen p-4">
-      <Card className="w-full max-w-md mb-4 md:mb-0 md:mr-4">
+    <div className="flex flex-col md:flex-row items-start justify-start min-h-screen p-4">
+      {/* Article Selection */}
+      <Card className="w-full max-w-2xl mb-4 md:mb-0 md:mr-4">
         <CardHeader>
           <CardTitle className="text-2xl">Welcome to LexiQuest!</CardTitle>
         </CardHeader>
