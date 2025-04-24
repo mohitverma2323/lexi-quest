@@ -8,65 +8,65 @@ body {
 
 @layer base {
   :root {
-    --background: 20 14.3% 46.1%;
-    --foreground: 24 9.8% 95.1%;
-    --card: 20 14.3% 46.1%;
-    --card-foreground: 24 9.8% 95.1%;
-    --popover: 20 14.3% 46.1%;
-    --popover-foreground: 24 9.8% 95.1%;
-    --primary: 142.1 76.2% 33.3%;
-    --primary-foreground: 210 22.2% 98.4%;
-    --secondary: 24 9.8% 90.0%;
-    --secondary-foreground: 24 10.0% 9.0%;
-    --muted: 24 9.8% 90.0%;
-    --muted-foreground: 24 5.7% 46.1%;
-    --accent: 24 9.8% 90.0%;
-    --accent-foreground: 24 10.0% 9.0%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
-    --border: 20 5.9% 65.9%;
-    --input: 20 5.9% 65.9%;
-    --ring: 142.1 76.2% 33.3%;
+    --background: 255 100% 100%; /* White */
+    --foreground: 0 0% 9%; /* Black */
+    --card: 255 100% 100%; /* White */
+    --card-foreground: 0 0% 9%; /* Black */
+    --popover: 255 100% 100%; /* White */
+    --popover-foreground: 0 0% 9%; /* Black */
+    --primary: 351 83% 53%; /* Tinder Red */
+    --primary-foreground: 0 0% 100%; /* White */
+    --secondary: 240 4.8% 95.9%; /* Light Gray */
+    --secondary-foreground: 0 0% 9%; /* Black */
+    --muted: 240 4.8% 95.9%; /* Light Gray */
+    --muted-foreground: 0 0% 45%; /* Dark Gray */
+    --accent: 240 4.8% 95.9%; /* Light Gray */
+    --accent-foreground: 0 0% 9%; /* Black */
+    --destructive: 0 84.2% 60.2%; /* Red */
+    --destructive-foreground: 0 0% 98%; /* White */
+    --border: 240 5.9% 90%; /* Light Gray */
+    --input: 240 5.9% 90%; /* Light Gray */
+    --ring: 351 83% 53%; /* Tinder Red */
     --radius: 0.5rem;
-    --sidebar-background: 20 14.3% 46.1%;
-    --sidebar-foreground: 24 9.8% 95.1%;
-    --sidebar-primary: 142.1 76.2% 33.3%;
-    --sidebar-primary-foreground: 210 22.2% 98.4%;
-    --sidebar-accent: 24 9.8% 90.0%;
-    --sidebar-accent-foreground: 24 10.0% 9.0%;
-    --sidebar-border: 20 5.9% 65.9%;
-    --sidebar-ring: 142.1 76.2% 33.3%;
+    --sidebar-background: 255 100% 100%; /* White */
+    --sidebar-foreground: 0 0% 9%; /* Black */
+    --sidebar-primary: 351 83% 53%; /* Tinder Red */
+    --sidebar-primary-foreground: 0 0% 100%; /* White */
+    --sidebar-accent: 240 4.8% 95.9%; /* Light Gray */
+    --sidebar-accent-foreground: 0 0% 9%; /* Black */
+    --sidebar-border: 240 5.9% 90%; /* Light Gray */
+    --sidebar-ring: 351 83% 53%; /* Tinder Red */
   }
 
   .dark {
-    --background: 20 14.3% 46.1%;
-    --foreground: 24 9.8% 95.1%;
-    --card: 20 14.3% 46.1%;
-    --card-foreground: 24 9.8% 95.1%;
-    --popover: 20 14.3% 46.1%;
-    --popover-foreground: 24 9.8% 95.1%;
-    --primary: 142.1 76.2% 33.3%;
-    --primary-foreground: 210 22.2% 98.4%;
-    --secondary: 24 9.8% 90.0%;
-    --secondary-foreground: 24 10.0% 9.0%;
-    --muted: 24 9.8% 90.0%;
-    --muted-foreground: 24 5.7% 46.1%;
-    --accent: 24 9.8% 90.0%;
-    --accent-foreground: 24 10.0% 9.0%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
-    --border: 20 5.9% 65.9%;
-    --input: 20 5.9% 65.9%;
-    --ring: 142.1 76.2% 33.3%;
+    --background: 0 0% 9%; /* Black */
+    --foreground: 0 0% 98%; /* White */
+    --card: 0 0% 9%; /* Black */
+    --card-foreground: 0 0% 98%; /* White */
+    --popover: 0 0% 9%; /* Black */
+    --popover-foreground: 0 0% 98%; /* White */
+    --primary: 351 83% 53%; /* Tinder Red */
+    --primary-foreground: 0 0% 100%; /* White */
+    --secondary: 0 0% 14.9%; /* Dark Gray */
+    --secondary-foreground: 0 0% 98%; /* White */
+    --muted: 0 0% 14.9%; /* Dark Gray */
+    --muted-foreground: 0 0% 63.9%; /* Light Gray */
+    --accent: 0 0% 14.9%; /* Dark Gray */
+    --accent-foreground: 0 0% 98%; /* White */
+    --destructive: 0 62.8% 30.6%; /* Red */
+    --destructive-foreground: 0 85.7% 97.3%; /* White */
+    --border: 0 0% 14.9%; /* Dark Gray */
+    --input: 240 3.7% 15.9%; /* Dark Gray */
+    --ring: 351 83% 53%; /* Tinder Red */
     --radius: 0.5rem;
-    --sidebar-background: 20 14.3% 46.1%;
-    --sidebar-foreground: 24 9.8% 95.1%;
-    --sidebar-primary: 142.1 76.2% 33.3%;
-    --sidebar-primary-foreground: 210 22.2% 98.4%;
-    --sidebar-accent: 24 9.8% 90.0%;
-    --sidebar-accent-foreground: 24 10.0% 9.0%;
-    --sidebar-border: 20 5.9% 65.9%;
-    --sidebar-ring: 142.1 76.2% 33.3%;
+    --sidebar-background: 0 0% 9%; /* Black */
+    --sidebar-foreground: 0 0% 98%; /* White */
+    --sidebar-primary: 351 83% 53%; /* Tinder Red */
+    --sidebar-primary-foreground: 0 0% 100%; /* White */
+    --sidebar-accent: 0 0% 14.9%; /* Dark Gray */
+    --sidebar-accent-foreground: 0 0% 98%; /* White */
+    --sidebar-border: 0 0% 14.9%; /* Dark Gray */
+    --sidebar-ring: 351 83% 53%; /* Tinder Red */
   }
 }
 
