@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { ArticleSummary, getArticles, recordArticleDisplayed } from "@/services/article-service";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Clock, Link, Bookmark } from "lucide-react";
+import { Clock, Link, Bookmark, ChevronLeft, ChevronRight } from "lucide-react";
 import { Toaster, toast } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
@@ -16,6 +16,7 @@ export default function ArticlesPage() {
   const readingTime = Number(searchParams.get('readingTime')) || 5;
   const tags = searchParams.get('tags')?.split(',') || [];
   const [articles, setArticles] = useState<ArticleSummary[]>([]);
+  const [currentArticleIndex, setCurrentArticleIndex] = useState(0);
   const userId = "user123"; // Placeholder user ID
 
   const { toast } = useToast();
@@ -47,49 +48,81 @@ export default function ArticlesPage() {
     });
   };
 
+  const goToPreviousArticle = () => {
+    setCurrentArticleIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+  };
+
+  const goToNextArticle = () => {
+    setCurrentArticleIndex((prevIndex) =>
+      Math.min(prevIndex + 1, articles.length - 1)
+    );
+  };
+
+  const currentArticle = articles[currentArticleIndex];
+
   return (
-    <div className="container mx-auto p-4 flex flex-col">
-      {/* Article Selection */}
-      <div className="flex flex-col">
-        <h1 className="text-2xl font-bold mb-4">Curated Articles</h1>
+    <div className="container mx-auto p-4 flex flex-col h-screen">
+      <div className="flex justify-between items-center h-full">
+        {/* Navigation Buttons */}
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={goToPreviousArticle}
+          disabled={currentArticleIndex === 0}
+        >
+          <ChevronLeft className="h-8 w-8" />
+        </Button>
 
-        <Separator className="mb-4" />
+        {/* Article Display */}
+        {currentArticle ? (
+          <Card className="w-full h-full flex flex-col justify-between">
+            <CardHeader>
+              <CardTitle>{currentArticle.title}</CardTitle>
+              <CardDescription>
+                <Clock className="mr-2 inline-block h-4 w-4" />
+                {currentArticle.readingTime} min read
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="font-bold">BLUF: {currentArticle.bluf}</p>
+              <p>{currentArticle.summary}</p>
+            </CardContent>
+            <CardFooter className="flex justify-between items-center">
+              <Button variant="link" asChild>
+                <a
+                  href={currentArticle.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center"
+                >
+                  Read More
+                  <Link className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => handleBookmark(currentArticle.id)}
+              >
+                <Bookmark className="h-4 w-4" />
+              </Button>
+            </CardFooter>
+          </Card>
+        ) : (
+          <p>No articles found.</p>
+        )}
 
-        {/* Article Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {articles.map((article) => {
-            handleArticleDisplayed(article.id);
-            return (
-              <Card key={article.id}>
-                <CardHeader>
-                  <CardTitle>{article.title}</CardTitle>
-                  <CardDescription>
-                    <Clock className="mr-2 inline-block h-4 w-4" />
-                    {article.readingTime} min read
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="font-bold">BLUF: {article.bluf}</p>
-                  <p>{article.summary}</p>
-                </CardContent>
-                <CardFooter className="flex justify-between items-center">
-                  <Button variant="link" asChild>
-                    <a href={article.link} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                      Read More
-                      <Link className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="icon" onClick={() => handleBookmark(article.id)}>
-                    <Bookmark className="h-4 w-4" />
-                  </Button>
-                </CardFooter>
-              </Card>
-            );
-          })}
-        </div>
+        {/* Navigation Buttons */}
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={goToNextArticle}
+          disabled={currentArticleIndex === articles.length - 1}
+        >
+          <ChevronRight className="h-8 w-8" />
+        </Button>
       </div>
-
-      <Toaster/>
+      <Toaster />
     </div>
   );
 }
