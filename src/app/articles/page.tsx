@@ -77,8 +77,16 @@ export default function ArticlesPage() {
         {/* Article Display */}
         {currentArticle ? (
           <Card className="w-full h-full flex flex-col justify-between">
-            <CardHeader>
+            <CardHeader className="relative">
               <CardTitle>{currentArticle.title}</CardTitle>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute top-2 right-2"
+                  onClick={() => handleBookmark(currentArticle.id)}
+                >
+                  <Bookmark className="h-4 w-4" />
+                </Button>
               <CardDescription>
                 <Clock className="mr-2 inline-block h-4 w-4" />
                 {currentArticle.readingTime} min read
@@ -100,13 +108,6 @@ export default function ArticlesPage() {
                   Read More
                   <Link className="ml-2 h-4 w-4" />
                 </a>
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => handleBookmark(currentArticle.id)}
-              >
-                <Bookmark className="h-4 w-4" />
               </Button>
             </CardFooter>
           </Card>
