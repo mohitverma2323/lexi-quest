@@ -2,13 +2,16 @@
 
 import {useState, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
-import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
+import {Card, CardContent, CardHeader, CardTitle, CardDescription} from '@/components/ui/card';
 import {Button} from '@/components/ui/button';
 import {Label} from '@/components/ui/label';
 import {Checkbox} from '@/components/ui/checkbox';
 import {Separator} from '@/components/ui/separator';
-import {Slider} from "@/components/ui/slider";
 import {cn} from '@/lib/utils';
+import {Slider} from "@/components/ui/slider";
+import {Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Clock, User, BookOpen } from "lucide-react";
 
 async function fetchTags(): Promise<string[]> {
   // Simulate an API call to fetch tags with a focus on tech articles.
@@ -57,8 +60,8 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <Card className="w-full max-w-md">
+    <div className="flex flex-col md:flex-row items-start justify-center min-h-screen p-4">
+      <Card className="w-full max-w-md mb-4 md:mb-0 md:mr-4">
         <CardHeader>
           <CardTitle className="text-2xl">Welcome to LexiQuest!</CardTitle>
         </CardHeader>
@@ -99,6 +102,37 @@ export default function Home() {
 
           <Separator />
           <Button onClick={handleSubmit}>Get Articles</Button>
+        </CardContent>
+      </Card>
+
+      {/* User Statistics */}
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle>User Statistics</CardTitle>
+          <CardDescription>Your Reading Journey</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center space-x-4 mb-4">
+            <Avatar>
+              <AvatarImage src="https://picsum.photos/50/50" alt="User Avatar" />
+              <AvatarFallback><User/></AvatarFallback>
+            </Avatar>
+            <div>
+              <p className="text-sm font-medium">John Doe</p>
+              <Badge variant="secondary">Sage Reader</Badge>
+            </div>
+          </div>
+          <Separator className="mb-4" />
+          <div className="space-y-2">
+            <p>
+              <BookOpen className="mr-2 inline-block h-4 w-4" />
+              Articles Read: 100
+            </p>
+            <p>
+              <Clock className="mr-2 inline-block h-4 w-4" />
+              Total Reading Time: 500 minutes
+            </p>
+          </div>
         </CardContent>
       </Card>
     </div>

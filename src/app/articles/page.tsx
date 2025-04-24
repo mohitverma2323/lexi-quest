@@ -5,9 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { ArticleSummary, getArticles, recordArticleDisplayed } from "@/services/article-service";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Clock, Link, Bookmark, User, BookOpen } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { Clock, Link, Bookmark } from "lucide-react";
 import { Toaster, toast } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
@@ -50,9 +48,9 @@ export default function ArticlesPage() {
   };
 
   return (
-    <div className="container mx-auto p-4 flex flex-col md:flex-row">
+    <div className="container mx-auto p-4 flex flex-col">
       {/* Article Selection */}
-      <div className="md:w-3/4 flex flex-col">
+      <div className="flex flex-col">
         <h1 className="text-2xl font-bold mb-4">Curated Articles</h1>
 
         <Separator className="mb-4" />
@@ -91,38 +89,6 @@ export default function ArticlesPage() {
         </div>
       </div>
 
-      {/* User Statistics */}
-      <div className="md:w-1/4 p-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>User Statistics</CardTitle>
-            <CardDescription>Your Reading Journey</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center space-x-4 mb-4">
-              <Avatar>
-                <AvatarImage src="https://picsum.photos/50/50" alt="User Avatar" />
-                <AvatarFallback><User/></AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="text-sm font-medium">John Doe</p>
-                <Badge variant="secondary">Sage Reader</Badge>
-              </div>
-            </div>
-            <Separator className="mb-4" />
-            <div className="space-y-2">
-              <p>
-                <BookOpen className="mr-2 inline-block h-4 w-4" />
-                Articles Read: 100
-              </p>
-              <p>
-                <Clock className="mr-2 inline-block h-4 w-4" />
-                Total Reading Time: 500 minutes
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
       <Toaster/>
     </div>
   );
