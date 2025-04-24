@@ -1,37 +1,50 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from 'next/navigation';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Separator } from "@/components/ui/separator";
+import {useState, useEffect} from 'react';
+import {useRouter} from 'next/navigation';
+import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
+import {Button} from '@/components/ui/button';
+import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
+import {Checkbox} from '@/components/ui/checkbox';
+import {Separator} from '@/components/ui/separator';
 
-const tagsList = [
-  "Technology",
-  "Science",
-  "History",
-  "Politics",
-  "Sports",
-  "Business",
-  "Health",
-  "Travel",
-  "Food",
-  "Lifestyle",
-];
+async function fetchTags(): Promise<string[]> {
+  // Simulate an API call to fetch tags.
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve([
+        'JavaScript',
+        'React',
+        'Node.js',
+        'TypeScript',
+        'Next.js',
+        'GraphQL',
+        'Web Development',
+        'Software Engineering',
+      ]);
+    }, 500); // Simulate a 0.5-second delay
+  });
+}
 
 export default function Home() {
   const [readingTime, setReadingTime] = useState<number>(5);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [tagsList, setTagsList] = useState<string[]>([]);
   const router = useRouter();
 
+  useEffect(() => {
+    async function loadTags() {
+      const tags = await fetchTags();
+      setTagsList(tags);
+    }
+
+    loadTags();
+  }, []);
+
   const handleTagSelect = (tag: string) => {
-    setSelectedTags((prevTags) =>
-      prevTags.includes(tag)
-        ? prevTags.filter((t) => t !== tag)
-        : [...prevTags, tag]
+    setSelectedTags(prevTags =>
+      prevTags.includes(tag) ? prevTags.filter(t => t !== tag) : [...prevTags, tag]
     );
   };
 
@@ -54,7 +67,7 @@ export default function Home() {
               min="1"
               max="10"
               value={readingTime}
-              onChange={(e) => setReadingTime(Number(e.target.value))}
+              onChange={e => setReadingTime(Number(e.target.value))}
               className="mt-1"
             />
           </div>
@@ -62,7 +75,7 @@ export default function Home() {
           <div>
             <Label>Select Tags:</Label>
             <div className="mt-1 grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {tagsList.map((tag) => (
+              {tagsList.map(tag => (
                 <div key={tag} className="flex items-center space-x-2">
                   <Checkbox
                     id={tag}
@@ -84,4 +97,3 @@ export default function Home() {
     </div>
   );
 }
-
