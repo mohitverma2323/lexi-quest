@@ -5,12 +5,13 @@ import { useSearchParams } from 'next/navigation';
 import { ArticleSummary, getArticles, recordArticleDisplayed } from "@/services/article-service";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Clock, Link, Bookmark, User } from "lucide-react";
+import { Clock, Link, Bookmark, User, BookOpen } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Toaster, toast } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
 export default function ArticlesPage() {
   const searchParams = useSearchParams();
@@ -111,7 +112,7 @@ export default function ArticlesPage() {
             <Separator className="mb-4" />
             <div className="space-y-2">
               <p>
-                <Book className="mr-2 inline-block h-4 w-4" />
+                <BookOpen className="mr-2 inline-block h-4 w-4" />
                 Articles Read: 100
               </p>
               <p>
