@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation';
 import { ArticleSummary, getArticles, recordArticleDisplayed } from "@/services/article-service";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Link, Bookmark, ChevronLeft, ChevronRight } from "lucide-react";
 import { Toaster, toast } from "@/components/ui/toaster";
@@ -71,7 +71,7 @@ export default function ArticlesPage() {
           onClick={goToPreviousArticle}
           disabled={currentArticleIndex === 0}
         >
-          <ChevronLeft className="h-12 w-12" />
+          <ChevronLeft className="h-12 w-12 font-bold" />
         </Button>
 
         {/* Article Display */}
@@ -82,17 +82,17 @@ export default function ArticlesPage() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute top-2 right-2"
+                  className="absolute top-2 right-2 p-1.5"
                   onClick={() => handleBookmark(currentArticle.id)}
                 >
-                  <Bookmark className="h-4 w-4" />
+                  <Bookmark className="h-6 w-6" />
                 </Button>
-              <CardDescription>
+              <div className="text-sm text-muted-foreground">
                 <Clock className="mr-2 inline-block h-4 w-4" />
                 {currentArticle.readingTime} min read
                 <br />
-                <span className="font-bold">BLUF:</span> {currentArticle.bluf}
-              </CardDescription>
+                <span className="font-bold text-lg">{currentArticle.bluf}</span>
+              </div>
             </CardHeader>
             <CardContent>
               <p>{currentArticle.summary}</p>
@@ -123,7 +123,7 @@ export default function ArticlesPage() {
           onClick={goToNextArticle}
           disabled={currentArticleIndex === articles.length - 1}
         >
-          <ChevronRight className="h-12 w-12" />
+          <ChevronRight className="h-12 w-12 font-bold" />
         </Button>
       </div>
       <Toaster />
@@ -140,3 +140,4 @@ const CardFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement
     {...props}
   />
 )
+
