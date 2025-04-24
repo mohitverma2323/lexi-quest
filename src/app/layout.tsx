@@ -31,12 +31,27 @@ export default function RootLayout({
           <Link href="/" className="text-lg font-semibold">
             Scroll Sage
           </Link>
-          <Button variant="outline" asChild>
-            <Link href="/">Home</Link>
-          </Button>
+          <div className="space-x-2">
+            <Button variant="outline" asChild>
+              <Link href="/">Home</Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link href="/dashboard">Dashboard</Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link href="/leaderboard">Leaderboard</Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link href="/bookmarks">Bookmarks</Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link href="/about">About</Link>
+            </Button>
+          </div>
         </nav>
         <main className="container mx-auto p-4">{children}</main>
       </body>
     </html>
   );
 }
+
