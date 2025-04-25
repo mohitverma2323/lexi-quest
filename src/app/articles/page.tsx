@@ -64,6 +64,8 @@ export default function ArticlesPage() {
       return <p>No articles found.</p>;
     }
 
+    handleArticleDisplayed(currentArticle.id);
+
     return (
       <div className="relative w-full h-full flex flex-col justify-start items-center">
         <ArticleHeader
@@ -88,20 +90,20 @@ export default function ArticlesPage() {
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex justify-between items-center mt-4">
+      <div className="flex justify-center items-center mt-4">
         <Button
-          variant="ghost"
+          variant="destructive"
           size="icon"
-          className="rounded-full p-6"
+          className="rounded-full p-6 transform scale-125"
           onClick={goToPreviousArticle}
           disabled={currentArticleIndex === 0}
         >
           <ChevronLeft className="h-12 w-12 font-bold" />
         </Button>
         <Button
-          variant="ghost"
+          variant="destructive"
           size="icon"
-          className="rounded-full p-6"
+          className="rounded-full p-6 transform scale-125 ml-4"
           onClick={goToNextArticle}
           disabled={currentArticleIndex === articles.length - 1}
         >
@@ -192,3 +194,4 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ readingTime, bluf, summ
     </div>
   );
 };
+
