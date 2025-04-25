@@ -149,7 +149,7 @@ export default function ArticlesPage() {
         variants={statsVariants}
         initial="hidden"
         animate="visible"
-        className="w-1/4 p-4 bg-secondary rounded-md shadow-md"
+        className="w-1/4 p-4 bg-secondary rounded-md shadow-md ml-8 sticky top-4 h-fit"
       >
         <h2 className="text-xl font-semibold mb-4 text-center">How is it going?</h2>
         <Separator className="mb-4" />
@@ -240,3 +240,4 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ readingTime, bluf, summ
     </div>
   );
 };
+
