@@ -1,3 +1,4 @@
+
 'use client';
 
 import {useState, useEffect} from 'react';
@@ -109,7 +110,7 @@ export default function Home() {
       {/* User Statistics */}
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>User Statistics</CardTitle>
+          <CardTitle>Your Statistics</CardTitle>
           <CardDescription>Your Reading Journey</CardDescription>
         </CardHeader>
         <CardContent>
@@ -139,3 +140,4 @@ export default function Home() {
     </div>
   );
 }
+
