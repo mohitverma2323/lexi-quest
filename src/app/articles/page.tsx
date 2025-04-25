@@ -85,7 +85,7 @@ export default function ArticlesPage() {
   return (
     <div className="container mx-auto p-4 flex flex-col h-screen">
       {/* Article Display */}
-      <div className="flex-1 flex justify-center items-center">
+      <div className="flex-1 flex justify-center items-center relative">
         {/* Previous Button */}
         <Button
           variant="destructive"
@@ -107,9 +107,9 @@ export default function ArticlesPage() {
           onClick={goToNextArticle}
           disabled={currentArticleIndex === articles.length - 1}
         >
+          Next
           <ChevronRight className="h-12 w-12 font-bold" />
           <span className="sr-only">Next</span>
-          Next
         </Button>
       </div>
 
@@ -196,6 +196,7 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ readingTime, bluf, summ
     </div>
   );
 };
+
 
 
 
