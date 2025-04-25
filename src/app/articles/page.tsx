@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from 'next/navigation';
 import { ArticleSummary, getArticles, recordArticleDisplayed } from "@/services/article-service";
 import { Button } from "@/components/ui/button";
@@ -59,10 +59,36 @@ export default function ArticlesPage() {
 
   const currentArticle = articles[currentArticleIndex];
 
+  const renderArticle = useCallback(() => {
+    if (!currentArticle) {
+      return <p>No articles found.</p>;
+    }
+
+    return (
+      <div className="relative w-full h-full flex flex-col justify-start items-center">
+        <ArticleHeader
+          title={currentArticle.title}
+          onBookmark={() => handleBookmark(currentArticle.id)}
+        />
+        <ArticleContent
+          readingTime={currentArticle.readingTime}
+          bluf={currentArticle.bluf}
+          summary={currentArticle.summary}
+          link={currentArticle.link}
+        />
+      </div>
+    );
+  }, [currentArticle, handleBookmark]);
+
   return (
     <div className="container mx-auto p-4 flex flex-col h-screen">
-      <div className="flex justify-between items-center h-full">
-        {/* Navigation Buttons */}
+      {/* Article Display */}
+      <div className="flex-1 flex justify-center items-center">
+        {renderArticle()}
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="flex justify-between items-center mt-4">
         <Button
           variant="ghost"
           size="icon"
@@ -72,19 +98,6 @@ export default function ArticlesPage() {
         >
           <ChevronLeft className="h-12 w-12 font-bold" />
         </Button>
-
-        {/* Article Display */}
-        {currentArticle ? (
-          <ArticleDisplay
-            article={currentArticle}
-            onBookmark={handleBookmark}
-            onArticleDisplayed={handleArticleDisplayed}
-          />
-        ) : (
-          <p>No articles found.</p>
-        )}
-
-        {/* Navigation Buttons */}
         <Button
           variant="ghost"
           size="icon"
@@ -95,6 +108,7 @@ export default function ArticlesPage() {
           <ChevronRight className="h-12 w-12 font-bold" />
         </Button>
       </div>
+
       <Toaster />
     </div>
   );
