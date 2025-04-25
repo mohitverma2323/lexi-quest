@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { ArticleSummary, getArticles, recordArticleDisplayed } from "@/services/article-service";
 import { Button } from "@/components/ui/button";
 import { Clock, Link, Bookmark, ChevronLeft, ChevronRight } from "lucide-react";
-import { Toaster, toast } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
@@ -86,7 +86,7 @@ export default function ArticlesPage() {
     <div className="container mx-auto p-4 flex flex-col h-screen">
       {/* Article Display */}
       <div className="flex-1 flex justify-center items-center">
-        {/* Navigation Buttons */}
+        {/* Previous Button */}
         <Button
           variant="destructive"
           size="icon"
@@ -95,10 +95,13 @@ export default function ArticlesPage() {
           disabled={currentArticleIndex === 0}
         >
           <ChevronLeft className="h-12 w-12 font-bold" />
+          <span className="sr-only">Previous</span>
+          Previous
         </Button>
 
         {renderArticle()}
 
+        {/* Next Button */}
         <Button
           variant="destructive"
           size="icon"
@@ -107,6 +110,8 @@ export default function ArticlesPage() {
           disabled={currentArticleIndex === articles.length - 1}
         >
           <ChevronRight className="h-12 w-12 font-bold" />
+          <span className="sr-only">Next</span>
+          Next
         </Button>
       </div>
 
