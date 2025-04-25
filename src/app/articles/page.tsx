@@ -4,11 +4,19 @@ import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from 'next/navigation';
 import { ArticleSummary, getArticles, recordArticleDisplayed } from "@/services/article-service";
 import { Button } from "@/components/ui/button";
-import { Clock, Link, Bookmark, ChevronLeft, ChevronRight } from "lucide-react";
+import { Clock, Link, Bookmark, ChevronLeft, ChevronRight, BookOpen, User } from "lucide-react";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+
+const statsVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+};
 
 export default function ArticlesPage() {
   const searchParams = useSearchParams();
@@ -19,6 +27,13 @@ export default function ArticlesPage() {
   const userId = "user123"; // Placeholder user ID
 
   const { toast } = useToast();
+
+  // Stats state
+  const [articlesReadToday, setArticlesReadToday] = useState(0);
+  const [readingTimeToday, setReadingTimeToday] = useState(0);
+  const [readerLevel, setReaderLevel] = useState("Beginner");
+  const [totalPoints, setTotalPoints] = useState(0);
+  const [statsAnimationKey, setStatsAnimationKey] = useState(0); // Key to trigger animation
 
   useEffect(() => {
     loadArticles();
@@ -55,6 +70,21 @@ export default function ArticlesPage() {
     setCurrentArticleIndex((prevIndex) =>
       Math.min(prevIndex + 1, articles.length - 1)
     );
+    updateStats(); // Update stats on next article
+    setStatsAnimationKey(prevKey => prevKey + 1); // Trigger animation
+  };
+
+  const updateStats = () => {
+    // Logic to update stats - replace with actual data
+    setArticlesReadToday(articlesReadToday + 1);
+    setReadingTimeToday(readingTimeToday + (currentArticle?.readingTime || 0));
+    setTotalPoints(totalPoints + 10);
+
+    if (articlesReadToday > 5) {
+      setReaderLevel("Intermediate");
+    } else if (articlesReadToday > 10) {
+      setReaderLevel("Advanced");
+    }
   };
 
   const currentArticle = articles[currentArticleIndex];
@@ -83,7 +113,7 @@ export default function ArticlesPage() {
   }, [currentArticle, handleBookmark]);
 
   return (
-    <div className="container mx-auto p-4 flex flex-col h-screen">
+    <div className="container mx-auto p-4 flex h-screen">
       {/* Article Display */}
       <div className="flex-1 flex justify-center items-center relative">
         {/* Previous Button */}
@@ -113,37 +143,51 @@ export default function ArticlesPage() {
         </Button>
       </div>
 
+      {/* Stats Component */}
+      <motion.div
+        key={statsAnimationKey}
+        variants={statsVariants}
+        initial="hidden"
+        animate="visible"
+        className="w-1/4 p-4 bg-secondary rounded-md shadow-md"
+      >
+        <h2 className="text-xl font-semibold mb-4 text-center">How is it going?</h2>
+        <Separator className="mb-4" />
+        <div className="space-y-2">
+          <p>
+            <BookOpen className="mr-2 inline-block h-4 w-4" />
+            Articles Read Today: {articlesReadToday}
+          </p>
+          <p>
+            <Clock className="mr-2 inline-block h-4 w-4" />
+            Reading Time Today: {readingTimeToday} minutes
+          </p>
+          <p>
+            <User className="mr-2 inline-block h-4 w-4" />
+            Reader Level: <Badge variant="secondary">{readerLevel}</Badge>
+          </p>
+          <p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-4 h-4 inline-block mr-2"
+            >
+              <path
+                fillRule="evenodd"
+                d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm3 10.5a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h5.25v2.25a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5H9.75v-2.25a.75.75 0 000-1.5h5.25z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Total Points: {totalPoints}
+          </p>
+        </div>
+      </motion.div>
+
       <Toaster />
     </div>
   );
 }
-
-interface ArticleDisplayProps {
-  article: ArticleSummary;
-  onBookmark: (articleId: string) => void;
-  onArticleDisplayed: (articleId: string) => void;
-}
-
-const ArticleDisplay: React.FC<ArticleDisplayProps> = ({ article, onBookmark, onArticleDisplayed }) => {
-  useEffect(() => {
-    onArticleDisplayed(article.id);
-  }, [article.id, onArticleDisplayed]);
-
-  return (
-    <div className="w-full h-full flex flex-col justify-start items-center">
-      <ArticleHeader
-        title={article.title}
-        onBookmark={() => onBookmark(article.id)}
-      />
-      <ArticleContent
-        readingTime={article.readingTime}
-        bluf={article.bluf}
-        summary={article.summary}
-        link={article.link}
-      />
-    </div>
-  );
-};
 
 interface ArticleHeaderProps {
   title: string;
@@ -196,7 +240,3 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ readingTime, bluf, summ
     </div>
   );
 };
-
-
-
-
