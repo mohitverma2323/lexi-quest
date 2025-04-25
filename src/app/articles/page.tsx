@@ -86,24 +86,23 @@ export default function ArticlesPage() {
     <div className="container mx-auto p-4 flex flex-col h-screen">
       {/* Article Display */}
       <div className="flex-1 flex justify-center items-center">
-        {renderArticle()}
-      </div>
-
-      {/* Navigation Buttons */}
-      <div className="flex justify-center items-center mt-4">
+        {/* Navigation Buttons */}
         <Button
           variant="destructive"
           size="icon"
-          className="rounded-full p-6 transform scale-125"
+          className="absolute left-4 rounded-full p-6 transform scale-125"
           onClick={goToPreviousArticle}
           disabled={currentArticleIndex === 0}
         >
           <ChevronLeft className="h-12 w-12 font-bold" />
         </Button>
+
+        {renderArticle()}
+
         <Button
           variant="destructive"
           size="icon"
-          className="rounded-full p-6 transform scale-125 ml-4"
+          className="absolute right-4 rounded-full p-6 transform scale-125"
           onClick={goToNextArticle}
           disabled={currentArticleIndex === articles.length - 1}
         >
@@ -194,4 +193,5 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ readingTime, bluf, summ
     </div>
   );
 };
+
 
