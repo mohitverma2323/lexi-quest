@@ -89,8 +89,7 @@ export default function ArticlesPage() {
         {/* Previous Button */}
         <Button
           variant="destructive"
-          size="icon"
-          className="absolute left-4 rounded-full p-6 transform scale-125"
+          className="absolute left-4 rounded-md p-6 transform scale-125"
           onClick={goToPreviousArticle}
           disabled={currentArticleIndex === 0}
         >
@@ -104,8 +103,7 @@ export default function ArticlesPage() {
         {/* Next Button */}
         <Button
           variant="destructive"
-          size="icon"
-          className="absolute right-4 rounded-full p-6 transform scale-125"
+          className="absolute right-4 rounded-md p-6 transform scale-125"
           onClick={goToNextArticle}
           disabled={currentArticleIndex === articles.length - 1}
         >
@@ -198,5 +196,6 @@ const ArticleContent: React.FC<ArticleContentProps> = ({ readingTime, bluf, summ
     </div>
   );
 };
+
 
 
